@@ -58,8 +58,11 @@ might be easier to look at the Enums section [in a specific category](APIByCateg
 - [SDL_GPUSampleCount](SDL_GPUSampleCount)
 - [SDL_GPUSamplerAddressMode](SDL_GPUSamplerAddressMode)
 - [SDL_GPUSamplerMipmapMode](SDL_GPUSamplerMipmapMode)
+- [SDL_GPUShaderSamplerType](SDL_GPUShaderSamplerType)
 - [SDL_GPUShaderStage](SDL_GPUShaderStage)
+- [SDL_GPUShaderTextureSampleType](SDL_GPUShaderTextureSampleType)
 - [SDL_GPUStencilOp](SDL_GPUStencilOp)
+- [SDL_GPUStorageTextureAccess](SDL_GPUStorageTextureAccess)
 - [SDL_GPUStoreOp](SDL_GPUStoreOp)
 - [SDL_GPUSwapchainComposition](SDL_GPUSwapchainComposition)
 - [SDL_GPUTextureFormat](SDL_GPUTextureFormat)
@@ -107,4 +110,3 @@ might be easier to look at the Enums section [in a specific category](APIByCateg
 - [SDL_TouchDeviceType](SDL_TouchDeviceType)
 - [SDL_TransferCharacteristics](SDL_TransferCharacteristics)
 <!-- END CATEGORY LIST -->
-

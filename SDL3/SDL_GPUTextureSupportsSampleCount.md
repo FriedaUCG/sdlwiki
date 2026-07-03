@@ -1,10 +1,10 @@
 # SDL_GPUTextureSupportsSampleCount
 
-Determines if a sample count for a texture format is supported.
+Determines if a render-target sample count for a texture format is supported.
 
 ## Header File
 
-Defined in [<SDL3/SDL_gpu.h>](https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_gpu.h)
+Defined in [<SDL3/SDL_gpu.h>](https://github.com/FriedaUCG/SDL/blob/webgpu/include/SDL3/SDL_gpu.h)
 
 ## Syntax
 
@@ -28,10 +28,15 @@ bool SDL_GPUTextureSupportsSampleCount(
 (bool) Returns whether the sample count is supported for this texture
 format.
 
+## Remarks
+
+This is a coarse texture allocation query for render-target sample counts,
+not an exact preflight for shader resource layouts, pipelines, or runtime
+object state. Final creation remains authoritative.
+
 ## Version
 
 This function is available since SDL 3.2.0.
 
 ----
 [CategoryAPI](CategoryAPI), [CategoryAPIFunction](CategoryAPIFunction), [CategoryGPU](CategoryGPU)
-

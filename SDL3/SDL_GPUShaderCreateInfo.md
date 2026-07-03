@@ -1,10 +1,10 @@
 # SDL_GPUShaderCreateInfo
 
-A structure specifying code and metadata for creating a shader object.
+A structure specifying code and resource counts for creating a shader object.
 
 ## Header File
 
-Defined in [<SDL3/SDL_gpu.h>](https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_gpu.h)
+Defined in [<SDL3/SDL_gpu.h>](https://github.com/FriedaUCG/SDL/blob/webgpu/include/SDL3/SDL_gpu.h)
 
 ## Syntax
 
@@ -37,4 +37,3 @@ This struct is available since SDL 3.2.0.
 
 ----
 [CategoryAPI](CategoryAPI), [CategoryAPIStruct](CategoryAPIStruct), [CategoryGPU](CategoryGPU)
-

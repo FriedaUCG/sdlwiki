@@ -4,7 +4,7 @@ Uploads data from a transfer buffer to a texture.
 
 ## Header File
 
-Defined in [<SDL3/SDL_gpu.h>](https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_gpu.h)
+Defined in [<SDL3/SDL_gpu.h>](https://github.com/FriedaUCG/SDL/blob/webgpu/include/SDL3/SDL_gpu.h)
 
 ## Syntax
 
@@ -31,7 +31,11 @@ The upload occurs on the GPU timeline. You may assume that the upload has
 finished in subsequent commands.
 
 You must align the data in the transfer buffer to a multiple of the texel
-size of the texture format.
+size of the texture format. For compressed texture formats,
+`destination->x` and `destination->y` must be aligned to the format's block
+width and height. `destination->w` and `destination->h` must be multiples
+of the block width and height unless the region reaches the edge of the
+selected mip level.
 
 ## Version
 
@@ -39,4 +43,3 @@ This function is available since SDL 3.2.0.
 
 ----
 [CategoryAPI](CategoryAPI), [CategoryAPIFunction](CategoryAPIFunction), [CategoryGPU](CategoryGPU)
-

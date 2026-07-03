@@ -4,7 +4,7 @@ A structure specifying the parameters of a color target used by a render pass.
 
 ## Header File
 
-Defined in [<SDL3/SDL_gpu.h>](https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_gpu.h)
+Defined in [<SDL3/SDL_gpu.h>](https://github.com/FriedaUCG/SDL/blob/webgpu/include/SDL3/SDL_gpu.h)
 
 ## Syntax
 
@@ -19,7 +19,7 @@ typedef struct SDL_GPUColorTargetInfo
     SDL_GPUStoreOp store_op;         /**< What is done with the results of the render pass. */
     SDL_GPUTexture *resolve_texture; /**< The texture that will receive the results of a multisample resolve operation. Ignored if a RESOLVE* store_op is not used. */
     Uint32 resolve_mip_level;        /**< The mip level of the resolve texture to use for the resolve operation. Ignored if a RESOLVE* store_op is not used. */
-    Uint32 resolve_layer;            /**< The layer index of the resolve texture to use for the resolve operation. Ignored if a RESOLVE* store_op is not used. */
+    Uint32 resolve_layer;            /**< The layer index or depth plane of the resolve texture to use for the resolve operation. This value is treated as a layer index on 2D array and cube textures, and as a depth plane on 3D textures. Ignored if a RESOLVE* store_op is not used. */
     bool cycle;                      /**< true cycles the texture if the texture is bound and load_op is not LOAD */
     bool cycle_resolve_texture;      /**< true cycles the resolve texture if the resolve texture is bound. Ignored if a RESOLVE* store_op is not used. */
     Uint8 padding1;
@@ -56,6 +56,10 @@ render pass.
   stores the multisample texture's contents. Not recommended as it requires
   significant memory bandwidth.
 
+For 3D resolve textures, resolve_layer selects the destination depth plane.
+Some backends may implement this with a 2D resolve plus copy, so
+performance can differ from ordinary 2D or array-layer resolves.
+
 ## Version
 
 This struct is available since SDL 3.2.0.
@@ -67,4 +71,3 @@ This struct is available since SDL 3.2.0.
 
 ----
 [CategoryAPI](CategoryAPI), [CategoryAPIStruct](CategoryAPIStruct), [CategoryGPU](CategoryGPU)
-

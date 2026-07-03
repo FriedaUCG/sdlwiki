@@ -1193,9 +1193,11 @@ const char * SDL_GetGPUDeviceDriver(SDL_GPUDevice *device);                     
 SDL_GPUShaderFormat SDL_GetGPUShaderFormats(SDL_GPUDevice *device);                                                                                                                                                                                                                                       // Returns the supported shader formats for this GPU context.
 SDL_PropertiesID SDL_GetGPUDeviceProperties(SDL_GPUDevice *device);                                                                                                                                                                                                                                       // Get the properties associated with a GPU device.
 SDL_GPUComputePipeline * SDL_CreateGPUComputePipeline(SDL_GPUDevice *device, const SDL_GPUComputePipelineCreateInfo *createinfo);                                                                                                                                                                         // Creates a pipeline object to be used in a compute workflow.
+SDL_GPUComputePipeline * SDL_CreateGPUComputePipelineWithResourceLayout(SDL_GPUDevice *device, const SDL_GPUComputePipelineWithResourceLayoutCreateInfo *createinfo);                                                                                                                                     // Creates a pipeline object to be used in a compute workflow using resource layout facts.
 SDL_GPUGraphicsPipeline * SDL_CreateGPUGraphicsPipeline(SDL_GPUDevice *device, const SDL_GPUGraphicsPipelineCreateInfo *createinfo);                                                                                                                                                                      // Creates a pipeline object to be used in a graphics workflow.
 SDL_GPUSampler * SDL_CreateGPUSampler(SDL_GPUDevice *device, const SDL_GPUSamplerCreateInfo *createinfo);                                                                                                                                                                                                 // Creates a sampler object to be used when binding textures in a graphics workflow.
 SDL_GPUShader * SDL_CreateGPUShader(SDL_GPUDevice *device, const SDL_GPUShaderCreateInfo *createinfo);                                                                                                                                                                                                    // Creates a shader to be used when creating a graphics pipeline.
+SDL_GPUShader * SDL_CreateGPUShaderWithResourceLayout(SDL_GPUDevice *device, const SDL_GPUShaderWithResourceLayoutCreateInfo *createinfo);                                                                                                                                                                // Creates a shader to be used when creating a graphics pipeline using resource layout facts.
 SDL_GPUTexture * SDL_CreateGPUTexture(SDL_GPUDevice *device, const SDL_GPUTextureCreateInfo *createinfo);                                                                                                                                                                                                 // Creates a texture object to be used in graphics or compute workflows.
 SDL_GPUBuffer * SDL_CreateGPUBuffer(SDL_GPUDevice *device, const SDL_GPUBufferCreateInfo *createinfo);                                                                                                                                                                                                    // Creates a buffer object to be used in graphics or compute workflows.
 SDL_GPUTransferBuffer * SDL_CreateGPUTransferBuffer(SDL_GPUDevice *device, const SDL_GPUTransferBufferCreateInfo *createinfo);                                                                                                                                                                            // Creates a transfer buffer to be used when uploading to or downloading from graphics resources.
@@ -1223,10 +1225,10 @@ void SDL_SetGPUBlendConstants(SDL_GPURenderPass *render_pass, SDL_FColor blend_c
 void SDL_SetGPUStencilReference(SDL_GPURenderPass *render_pass, Uint8 reference);                                                                                                                                                                                                                         // Sets the current stencil reference value on a command buffer.
 void SDL_BindGPUVertexBuffers(SDL_GPURenderPass *render_pass, Uint32 first_slot, const SDL_GPUBufferBinding *bindings, Uint32 num_bindings);                                                                                                                                                              // Binds vertex buffers on a command buffer for use with subsequent draw calls.
 void SDL_BindGPUIndexBuffer(SDL_GPURenderPass *render_pass, const SDL_GPUBufferBinding *binding, SDL_GPUIndexElementSize index_element_size);                                                                                                                                                             // Binds an index buffer on a command buffer for use with subsequent draw calls.
-void SDL_BindGPUVertexSamplers(SDL_GPURenderPass *render_pass, Uint32 first_slot, const SDL_GPUTextureSamplerBinding *texture_sampler_bindings, Uint32 num_bindings);                                                                                                                                     // Binds texture-sampler pairs for use on the vertex shader.
+void SDL_BindGPUVertexSamplers(SDL_GPURenderPass *render_pass, Uint32 first_slot, const SDL_GPUTextureSamplerBinding *texture_sampler_bindings, Uint32 num_bindings);                                                                                                                                     // Binds sampled textures, and their paired samplers when required, for use on the vertex shader.
 void SDL_BindGPUVertexStorageTextures(SDL_GPURenderPass *render_pass, Uint32 first_slot, SDL_GPUTexture *const *storage_textures, Uint32 num_bindings);                                                                                                                                                   // Binds storage textures for use on the vertex shader.
 void SDL_BindGPUVertexStorageBuffers(SDL_GPURenderPass *render_pass, Uint32 first_slot, SDL_GPUBuffer *const *storage_buffers, Uint32 num_bindings);                                                                                                                                                      // Binds storage buffers for use on the vertex shader.
-void SDL_BindGPUFragmentSamplers(SDL_GPURenderPass *render_pass, Uint32 first_slot, const SDL_GPUTextureSamplerBinding *texture_sampler_bindings, Uint32 num_bindings);                                                                                                                                   // Binds texture-sampler pairs for use on the fragment shader.
+void SDL_BindGPUFragmentSamplers(SDL_GPURenderPass *render_pass, Uint32 first_slot, const SDL_GPUTextureSamplerBinding *texture_sampler_bindings, Uint32 num_bindings);                                                                                                                                   // Binds sampled textures, and their paired samplers when required, for use on the fragment shader.
 void SDL_BindGPUFragmentStorageTextures(SDL_GPURenderPass *render_pass, Uint32 first_slot, SDL_GPUTexture *const *storage_textures, Uint32 num_bindings);                                                                                                                                                 // Binds storage textures for use on the fragment shader.
 void SDL_BindGPUFragmentStorageBuffers(SDL_GPURenderPass *render_pass, Uint32 first_slot, SDL_GPUBuffer *const *storage_buffers, Uint32 num_bindings);                                                                                                                                                    // Binds storage buffers for use on the fragment shader.
 void SDL_DrawGPUIndexedPrimitives(SDL_GPURenderPass *render_pass, Uint32 num_indices, Uint32 num_instances, Uint32 first_index, Sint32 vertex_offset, Uint32 first_instance);                                                                                                                             // Draws data using bound graphics state with an index buffer and instancing enabled.
@@ -1236,7 +1238,7 @@ void SDL_DrawGPUIndexedPrimitivesIndirect(SDL_GPURenderPass *render_pass, SDL_GP
 void SDL_EndGPURenderPass(SDL_GPURenderPass *render_pass);                                                                                                                                                                                                                                                // Ends the given render pass.
 SDL_GPUComputePass * SDL_BeginGPUComputePass(SDL_GPUCommandBuffer *command_buffer, const SDL_GPUStorageTextureReadWriteBinding *storage_texture_bindings, Uint32 num_storage_texture_bindings, const SDL_GPUStorageBufferReadWriteBinding *storage_buffer_bindings, Uint32 num_storage_buffer_bindings);  // Begins a compute pass on a command buffer.
 void SDL_BindGPUComputePipeline(SDL_GPUComputePass *compute_pass, SDL_GPUComputePipeline *compute_pipeline);                                                                                                                                                                                              // Binds a compute pipeline on a command buffer for use in compute dispatch.
-void SDL_BindGPUComputeSamplers(SDL_GPUComputePass *compute_pass, Uint32 first_slot, const SDL_GPUTextureSamplerBinding *texture_sampler_bindings, Uint32 num_bindings);                                                                                                                                  // Binds texture-sampler pairs for use on the compute shader.
+void SDL_BindGPUComputeSamplers(SDL_GPUComputePass *compute_pass, Uint32 first_slot, const SDL_GPUTextureSamplerBinding *texture_sampler_bindings, Uint32 num_bindings);                                                                                                                                  // Binds sampled textures, and their paired samplers when required, for use on the compute shader.
 void SDL_BindGPUComputeStorageTextures(SDL_GPUComputePass *compute_pass, Uint32 first_slot, SDL_GPUTexture *const *storage_textures, Uint32 num_bindings);                                                                                                                                                // Binds storage textures as readonly for use on the compute pipeline.
 void SDL_BindGPUComputeStorageBuffers(SDL_GPUComputePass *compute_pass, Uint32 first_slot, SDL_GPUBuffer *const *storage_buffers, Uint32 num_bindings);                                                                                                                                                   // Binds storage buffers as readonly for use on the compute pipeline.
 void SDL_DispatchGPUCompute(SDL_GPUComputePass *compute_pass, Uint32 groupcount_x, Uint32 groupcount_y, Uint32 groupcount_z);                                                                                                                                                                             // Dispatches compute work.
@@ -1273,7 +1275,7 @@ bool SDL_QueryGPUFence(SDL_GPUDevice *device, SDL_GPUFence *fence);             
 void SDL_ReleaseGPUFence(SDL_GPUDevice *device, SDL_GPUFence *fence);                                                                                                                                                                                                                                     // Releases a fence obtained from SDL_SubmitGPUCommandBufferAndAcquireFence.
 Uint32 SDL_GPUTextureFormatTexelBlockSize(SDL_GPUTextureFormat format);                                                                                                                                                                                                                                   // Obtains the texel block size for a texture format.
 bool SDL_GPUTextureSupportsFormat(SDL_GPUDevice *device, SDL_GPUTextureFormat format, SDL_GPUTextureType type, SDL_GPUTextureUsageFlags usage);                                                                                                                                                           // Determines whether a texture format is supported for a given type and usage.
-bool SDL_GPUTextureSupportsSampleCount(SDL_GPUDevice *device, SDL_GPUTextureFormat format, SDL_GPUSampleCount sample_count);                                                                                                                                                                              // Determines if a sample count for a texture format is supported.
+bool SDL_GPUTextureSupportsSampleCount(SDL_GPUDevice *device, SDL_GPUTextureFormat format, SDL_GPUSampleCount sample_count);                                                                                                                                                                              // Determines if a render-target sample count for a texture format is supported.
 Uint32 SDL_CalculateGPUTextureFormatSize(SDL_GPUTextureFormat format, Uint32 width, Uint32 height, Uint32 depth_or_layer_count);                                                                                                                                                                          // Calculate the size in bytes of a texture format with dimensions.
 SDL_PixelFormat SDL_GetPixelFormatFromGPUTextureFormat(SDL_GPUTextureFormat format);                                                                                                                                                                                                                      // Get the SDL pixel format corresponding to a GPU texture format.
 SDL_GPUTextureFormat SDL_GetGPUTextureFormatFromPixelFormat(SDL_PixelFormat format);                                                                                                                                                                                                                      // Get the GPU texture format corresponding to an SDL pixel format.
@@ -1310,42 +1312,7 @@ void * SDL_Metal_GetLayer(SDL_MetalView view);           // Get a pointer to the
 // XX       XX       XX   XX     XX     XX       XX    XX  XX   XX  XX  XX  XX
 // XX       XXXXXXX  XX   XX     XX     XX        XXXXXX   XX   XX  XX      XX
 
-#define SDL_PLATFORM_AIX         // A preprocessor macro that is only defined if compiling for AIX.
-#define SDL_PLATFORM_HAIKU       // A preprocessor macro that is only defined if compiling for Haiku OS.
-#define SDL_PLATFORM_BSDI        // A preprocessor macro that is only defined if compiling for BSDi
-#define SDL_PLATFORM_FREEBSD     // A preprocessor macro that is only defined if compiling for FreeBSD.
-#define SDL_PLATFORM_HPUX        // A preprocessor macro that is only defined if compiling for HP-UX.
-#define SDL_PLATFORM_IRIX        // A preprocessor macro that is only defined if compiling for IRIX.
-#define SDL_PLATFORM_LINUX       // A preprocessor macro that is only defined if compiling for Linux.
-#define SDL_PLATFORM_ANDROID     // A preprocessor macro that is only defined if compiling for Android.
-#define SDL_PLATFORM_UNIX        // A preprocessor macro that is only defined if compiling for a Unix-like system.
-#define SDL_PLATFORM_APPLE       // A preprocessor macro that is only defined if compiling for Apple platforms.
-#define SDL_PLATFORM_TVOS        // A preprocessor macro that is only defined if compiling for tvOS.
-#define SDL_PLATFORM_VISIONOS    // A preprocessor macro that is only defined if compiling for visionOS.
-#define SDL_PLATFORM_IOS         // A preprocessor macro that is only defined if compiling for iOS or visionOS.
-#define SDL_PLATFORM_MACOS       // A preprocessor macro that is only defined if compiling for macOS.
-#define SDL_PLATFORM_EMSCRIPTEN  // A preprocessor macro that is only defined if compiling for Emscripten.
-#define SDL_PLATFORM_NETBSD      // A preprocessor macro that is only defined if compiling for NetBSD.
-#define SDL_PLATFORM_OPENBSD     // A preprocessor macro that is only defined if compiling for OpenBSD.
-#define SDL_PLATFORM_OS2         // A preprocessor macro that is only defined if compiling for OS/2.
-#define SDL_PLATFORM_OSF         // A preprocessor macro that is only defined if compiling for Tru64 (OSF/1).
-#define SDL_PLATFORM_QNXNTO      // A preprocessor macro that is only defined if compiling for QNX Neutrino.
-#define SDL_PLATFORM_RISCOS      // A preprocessor macro that is only defined if compiling for RISC OS.
-#define SDL_PLATFORM_SOLARIS     // A preprocessor macro that is only defined if compiling for SunOS/Solaris.
-#define SDL_PLATFORM_CYGWIN      // A preprocessor macro that is only defined if compiling for Cygwin.
-#define SDL_PLATFORM_WINDOWS     // A preprocessor macro that is only defined if compiling for Windows.
-#define SDL_PLATFORM_WINGDK      // A preprocessor macro that is only defined if compiling for Microsoft GDK for Windows.
-#define SDL_PLATFORM_XBOXONE     // A preprocessor macro that is only defined if compiling for Xbox One.
-#define SDL_PLATFORM_XBOXSERIES  // A preprocessor macro that is only defined if compiling for Xbox Series.
-#define SDL_PLATFORM_WIN32       // A preprocessor macro that is only defined if compiling for desktop Windows.
-#define SDL_PLATFORM_GDK         // A preprocessor macro that is only defined if compiling for Microsoft GDK on any platform.
-#define SDL_PLATFORM_PSP         // A preprocessor macro that is only defined if compiling for Sony PSP.
-#define SDL_PLATFORM_PS2         // A preprocessor macro that is only defined if compiling for Sony PlayStation 2.
-#define SDL_PLATFORM_VITA        // A preprocessor macro that is only defined if compiling for Sony Vita.
-#define SDL_PLATFORM_3DS         // A preprocessor macro that is only defined if compiling for Nintendo 3DS.
-#define SDL_PLATFORM_NGAGE       // A preprocessor macro that is only defined if compiling for the Nokia N-Gage.
-#define SDL_PLATFORM_DOS         // A preprocessor macro that is only defined if compiling for MS-DOS.
-#define SDL_PLATFORM_HURD        // A preprocessor macro that is only defined if compiling for GNU/Hurd.
+const char * SDL_GetPlatform(void);  // Get the name of the platform.
 
 // XXXXXX    XXXXXX   XX     XX  XXXXXXX  XXXXXX
 // XX   XX  XX    XX  XX     XX  XX       XX   XX
@@ -1546,6 +1513,24 @@ bool SDL_OpenURL(const char *url);  // Open a URL/URI in the browser or other ap
 void SDL_GUIDToString(SDL_GUID guid, char *pszGUID, int cbGUID);  // Get an ASCII string representation for a given SDL_GUID.
 SDL_GUID SDL_StringToGUID(const char *pchGUID);                   // Convert a GUID string into a SDL_GUID structure.
 
+// XXX    XXX   XXXXX   XX  XXX    XX
+// XXXX  XXXX  XX   XX  XX  XXXX   XX
+// XX XXXX XX  XXXXXXX  XX  XX XX  XX
+// XX  XX  XX  XX   XX  XX  XX  XX XX
+// XX      XX  XX   XX  XX  XX   XXXX
+
+SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv);                                                                                                  // App-implemented initial entry point for SDL_MAIN_USE_CALLBACKS apps.
+SDL_AppResult SDL_AppIterate(void *appstate);                                                                                                                       // App-implemented iteration entry point for SDL_MAIN_USE_CALLBACKS apps.
+SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event);                                                                                                       // App-implemented event entry point for SDL_MAIN_USE_CALLBACKS apps.
+void SDL_AppQuit(void *appstate, SDL_AppResult result);                                                                                                             // App-implemented deinit entry point for SDL_MAIN_USE_CALLBACKS apps.
+int SDL_main(int argc, char **argv);                                                                                                                                // An app-supplied function for program entry.
+void SDL_SetMainReady(void);                                                                                                                                        // Circumvent failure of SDL_Init() when not using SDL_main() as an entry point.
+int SDL_RunApp(int argc, char **argv, SDL_main_func mainFunction, void *reserved);                                                                                  // Initializes and launches an SDL application, by doing platform-specific initialization before calling your mainFunction and cleanups after it returns, if that is needed for a specific platform, otherwise it just calls mainFunction.
+int SDL_EnterAppMainCallbacks(int argc, char **argv, SDL_AppInit_func appinit, SDL_AppIterate_func appiter, SDL_AppEvent_func appevent, SDL_AppQuit_func appquit);  // An entry point for SDL's use in SDL_MAIN_USE_CALLBACKS.
+bool SDL_RegisterApp(const char *name, Uint32 style, void *hInst);                                                                                                  // Register a win32 window class for SDL's use.
+void SDL_UnregisterApp(void);                                                                                                                                       // Deregister the win32 window class from an SDL_RegisterApp call.
+void SDL_GDKSuspendComplete(void);                                                                                                                                  // Callback from the application to let the suspend continue.
+
 //  XXXXXX  XXXXXXXX  XXXXXX   XX  XXX    XX   XXXXXX
 // XX          XX     XX   XX  XX  XXXX   XX  XX
 // XXXXXXX     XX     XX   XX  XX  XX XX  XX  XX
@@ -1730,4 +1715,3 @@ char * SDL_iconv_string(const char *tocode, const char *fromcode, const char *in
 bool SDL_size_mul_check_overflow(size_t a, size_t b, size_t *ret);                                                                                          // Multiply two integers, checking for overflow.
 bool SDL_size_add_check_overflow(size_t a, size_t b, size_t *ret);                                                                                          // Add two integers, checking for overflow.
 ```
-

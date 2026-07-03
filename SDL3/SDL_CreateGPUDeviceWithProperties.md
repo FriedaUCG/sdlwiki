@@ -4,7 +4,7 @@ Creates a GPU context.
 
 ## Header File
 
-Defined in [<SDL3/SDL_gpu.h>](https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_gpu.h)
+Defined in [<SDL3/SDL_gpu.h>](https://github.com/FriedaUCG/SDL/blob/webgpu/include/SDL3/SDL_gpu.h)
 
 ## Syntax
 
@@ -39,23 +39,25 @@ These are the supported properties:
 - [`SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING`](SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING):
   the name of the GPU driver to use, if a specific one is desired.
 - [`SDL_PROP_GPU_DEVICE_CREATE_FEATURE_CLIP_DISTANCE_BOOLEAN`](SDL_PROP_GPU_DEVICE_CREATE_FEATURE_CLIP_DISTANCE_BOOLEAN):
-  Enable Vulkan device feature shaderClipDistance. If disabled, clip
-  distances are not supported in shader code: gl_ClipDistance[] built-ins
-  of GLSL, SV_ClipDistance0/1 semantics of HLSL and [[clip_distance]]
-  attribute of Metal. Disabling optional features allows the application to
-  run on some older Android devices. Defaults to true.
+  Enable Vulkan device feature shaderClipDistance or the WebGPU
+  clip-distances feature when supported. If disabled, clip distances are
+  not supported in shader code: gl_ClipDistance[] built-ins of GLSL,
+  SV_ClipDistance0/1 semantics of HLSL and [[clip_distance]] attribute of
+  Metal. Vulkan defaults to true; WebGPU requests this feature only when
+  this property is true.
 - [`SDL_PROP_GPU_DEVICE_CREATE_FEATURE_DEPTH_CLAMPING_BOOLEAN`](SDL_PROP_GPU_DEVICE_CREATE_FEATURE_DEPTH_CLAMPING_BOOLEAN):
-  Enable Vulkan device feature depthClamp. If disabled, there is no depth
-  clamp support and enable_depth_clip in
-  [SDL_GPURasterizerState](SDL_GPURasterizerState) must always be set to
-  true. Disabling optional features allows the application to run on some
-  older Android devices. Defaults to true.
+  Enable Vulkan device feature depthClamp or the WebGPU depth-clip-control
+  feature when supported. If disabled, there is no depth clamp support and
+  enable_depth_clip in [SDL_GPURasterizerState](SDL_GPURasterizerState)
+  must always be set to true. Disabling optional features allows the
+  application to run on some older devices. Defaults to true.
 - [`SDL_PROP_GPU_DEVICE_CREATE_FEATURE_INDIRECT_DRAW_FIRST_INSTANCE_BOOLEAN`](SDL_PROP_GPU_DEVICE_CREATE_FEATURE_INDIRECT_DRAW_FIRST_INSTANCE_BOOLEAN):
-  Enable Vulkan device feature drawIndirectFirstInstance. If disabled, the
-  argument first_instance of
+  Enable Vulkan device feature drawIndirectFirstInstance or the WebGPU
+  indirect-first-instance feature when supported. If disabled, the argument
+  first_instance of
   [SDL_GPUIndirectDrawCommand](SDL_GPUIndirectDrawCommand) must be set to
   zero. Disabling optional features allows the application to run on some
-  older Android devices. Defaults to true.
+  older devices. Defaults to true.
 - [`SDL_PROP_GPU_DEVICE_CREATE_FEATURE_ANISOTROPY_BOOLEAN`](SDL_PROP_GPU_DEVICE_CREATE_FEATURE_ANISOTROPY_BOOLEAN):
   Enable Vulkan device feature samplerAnisotropy. If disabled,
   enable_anisotropy of [SDL_GPUSamplerCreateInfo](SDL_GPUSamplerCreateInfo)
@@ -76,6 +78,10 @@ These are the current shader format properties:
   The app is able to provide MSL shaders if applicable.
 - [`SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN`](SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOLEAN):
   The app is able to provide Metal shader libraries if applicable.
+- [`SDL_PROP_GPU_DEVICE_CREATE_SHADERS_WGSL_BOOLEAN`](SDL_PROP_GPU_DEVICE_CREATE_SHADERS_WGSL_BOOLEAN):
+  The app is able to provide WGSL shaders for the WebGPU backend if
+  applicable. Shaders must follow SDL's documented WebGPU binding
+  convention and supported resource subset.
 
 With the D3D12 backend:
 
@@ -111,9 +117,9 @@ With the Vulkan backend:
 - [`SDL_PROP_GPU_DEVICE_CREATE_VULKAN_REQUIRE_HARDWARE_ACCELERATION_BOOLEAN`](SDL_PROP_GPU_DEVICE_CREATE_VULKAN_REQUIRE_HARDWARE_ACCELERATION_BOOLEAN):
   By default, Vulkan device enumeration includes drivers of all types,
   including software renderers (for example, the Lavapipe Mesa driver).
-  This can be useful if your application _requires_ [SDL_GPU](SDL_GPU), but
-  if you can provide your own fallback renderer (for example, an OpenGL
-  renderer) this property can be set to true. Defaults to false.
+  This can be useful if your application _requires_ the GPU API, but if you
+  can provide your own fallback renderer (for example, an OpenGL renderer)
+  this property can be set to true. Defaults to false.
 - [`SDL_PROP_GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER`](SDL_PROP_GPU_DEVICE_CREATE_VULKAN_OPTIONS_POINTER):
   a pointer to an [SDL_GPUVulkanOptions](SDL_GPUVulkanOptions) structure to
   be processed during device creation. This allows configuring a variety of
@@ -127,8 +133,8 @@ hardware or newer. However, an application can set this property to true to
 enable support for "MTLGPUFamilyMac1" hardware, if (and only if) the
 application does not write to sRGB textures. (For history's sake:
 MacFamily1 also does not support indirect command buffers, MSAA depth
-resolve, and stencil resolve/feedback, but these are not exposed features
-in [SDL_GPU](SDL_GPU).)
+resolve, and stencil resolve/feedback, but these are not exposed GPU API
+features.)
 
 ## Version
 
@@ -143,4 +149,3 @@ This function is available since SDL 3.2.0.
 
 ----
 [CategoryAPI](CategoryAPI), [CategoryAPIFunction](CategoryAPIFunction), [CategoryGPU](CategoryGPU)
-

@@ -4,7 +4,7 @@ A structure specifying the parameters of a depth-stencil target used by a render
 
 ## Header File
 
-Defined in [<SDL3/SDL_gpu.h>](https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_gpu.h)
+Defined in [<SDL3/SDL_gpu.h>](https://github.com/FriedaUCG/SDL/blob/webgpu/include/SDL3/SDL_gpu.h)
 
 ## Syntax
 
@@ -20,7 +20,7 @@ typedef struct SDL_GPUDepthStencilTargetInfo
     bool cycle;                            /**< true cycles the texture if the texture is bound and any load ops are not LOAD */
     Uint8 clear_stencil;                   /**< The value to clear the stencil component to at the beginning of the render pass. Ignored if SDL_GPU_LOADOP_CLEAR is not used. */
     Uint8 mip_level;                       /**< The mip level to use as the depth stencil target. */
-    Uint8 layer;                           /**< The layer index to use as the depth stencil target. */
+    Uint8 layer;                           /**< The layer index to use as the depth stencil target. For 2D array, cube, and cube-array depth-stencil textures, this selects the array layer or cube face. */
 } SDL_GPUDepthStencilTargetInfo;
 ```
 
@@ -75,4 +75,3 @@ This struct is available since SDL 3.2.0.
 
 ----
 [CategoryAPI](CategoryAPI), [CategoryAPIStruct](CategoryAPIStruct), [CategoryGPU](CategoryGPU)
-

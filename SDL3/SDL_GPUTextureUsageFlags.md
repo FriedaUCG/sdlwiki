@@ -4,7 +4,7 @@ Specifies how a texture is intended to be used by the client.
 
 ## Header File
 
-Defined in [<SDL3/SDL_gpu.h>](https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_gpu.h)
+Defined in [<SDL3/SDL_gpu.h>](https://github.com/FriedaUCG/SDL/blob/webgpu/include/SDL3/SDL_gpu.h)
 
 ## Syntax
 
@@ -29,11 +29,13 @@ With regards to compute storage usage, READ | WRITE means that you can have
 shader A that only writes into the texture and shader B that only reads
 from the texture and bind the same texture to either shader respectively.
 SIMULTANEOUS means that you can do reads and writes within the same shader
-or compute pass. It also implies that atomic ops can be used, since those
-are read-modify-write operations. If you use SIMULTANEOUS, you are
-responsible for avoiding data races, as there is no data synchronization
-within a compute pass. Note that SIMULTANEOUS usage is only supported by a
-limited number of texture formats.
+or compute pass. If a backend and shader language expose storage texture
+atomic operations, SIMULTANEOUS usage is required for them, since atomics
+are read-modify-write operations. Unsupported atomic texture operations are
+still rejected by the backend. If you use SIMULTANEOUS, you are responsible
+for avoiding data races, as there is no data synchronization within a
+compute pass. Note that SIMULTANEOUS usage is only supported by a limited
+number of texture formats.
 
 ## Version
 
@@ -45,4 +47,3 @@ This datatype is available since SDL 3.2.0.
 
 ----
 [CategoryAPI](CategoryAPI), [CategoryAPIDatatype](CategoryAPIDatatype), [CategoryGPU](CategoryGPU)
-

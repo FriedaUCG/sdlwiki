@@ -4,7 +4,7 @@ Creates a shader to be used when creating a graphics pipeline.
 
 ## Header File
 
-Defined in [<SDL3/SDL_gpu.h>](https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_gpu.h)
+Defined in [<SDL3/SDL_gpu.h>](https://github.com/FriedaUCG/SDL/blob/webgpu/include/SDL3/SDL_gpu.h)
 
 ## Syntax
 
@@ -73,6 +73,49 @@ For MSL/metallib, use the following order:
   [[stage_in]] attribute which will automatically use the vertex input
   information from the [SDL_GPUGraphicsPipeline](SDL_GPUGraphicsPipeline).
 
+For WGSL with the WebGPU backend, shaders must follow SDL's WebGPU binding
+convention. Without a shader resource layout carrying explicit layout
+facts, shaders must use the default supported resource subset. An
+[SDL_GPUShaderResourceLayout](SDL_GPUShaderResourceLayout) supplied to
+shader creation can declare selected non-default sampled texture, sampler,
+and storage texture layout while preserving the same resource groups:
+
+For vertex shaders:
+
+- Group 0: Sampled texture/sampler pairs, followed by read-only storage
+  textures, followed by read-only storage buffers. Sampler slot N uses
+  texture binding 2*N and sampler binding 2*N+1. Storage texture slot N
+  uses binding 2*num_samplers+N. Storage buffer slot N uses binding
+  2*num_samplers+num_storage_textures+N.
+- Group 1: Uniform buffers at binding N.
+
+For fragment shaders:
+
+- Group 2: Sampled texture/sampler pairs, followed by read-only storage
+  textures, followed by read-only storage buffers. Sampler slot N uses
+  texture binding 2*N and sampler binding 2*N+1. Read-only storage texture
+  slot N uses binding 2*num_samplers+N. Read-only storage buffer slot N
+  uses binding 2*num_samplers+num_storage_textures+N.
+- Group 3: Uniform buffers at binding N.
+
+With the default resource layout, WebGPU graphics storage textures are
+read-only `texture_storage_2d<rgba8unorm, read>` resources created with
+[`SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM`](SDL_GPU_TEXTUREFORMAT_R8G8B8A8_UNORM).
+[SDL_GPUShaderResourceLayout](SDL_GPUShaderResourceLayout) can declare
+read-only 2D, 2D-array, and 3D `rgba8unorm`, `r32uint`, `r32sint`, or
+`r32float` storage texture slots. WGSL shaders using graphics storage
+textures must declare `requires readonly_and_readwrite_storage_textures;`.
+Textures may be created with
+[`SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ`](SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ)
+alone, or with `SDL_GPU_TEXTUREUSAGE_GRAPHICS_STORAGE_READ |
+SDL_GPU_TEXTUREUSAGE_COLOR_TARGET` for render-then-storage-read workflows
+across separate render passes. This combination does not permit binding the
+same texture as both a render attachment and a storage texture in the same
+render pass.
+
+Compute pipeline resource ordering for the WebGPU backend is documented in
+[SDL_CreateGPUComputePipeline](SDL_CreateGPUComputePipeline)().
+
 Shader semantics other than system-value semantics do not matter in D3D12
 and for ease of use the SDL implementation assumes that non system-value
 semantics will all be TEXCOORD. If you are using HLSL as the shader source
@@ -89,6 +132,9 @@ are the supported properties:
 - [`SDL_PROP_GPU_SHADER_CREATE_NAME_STRING`](SDL_PROP_GPU_SHADER_CREATE_NAME_STRING):
   a name that can be displayed in debugging tools.
 
+Non-default resource layout facts are supplied through
+[SDL_CreateGPUShaderWithResourceLayout](SDL_CreateGPUShaderWithResourceLayout)().
+
 ## Version
 
 This function is available since SDL 3.2.0.
@@ -100,4 +146,3 @@ This function is available since SDL 3.2.0.
 
 ----
 [CategoryAPI](CategoryAPI), [CategoryAPIFunction](CategoryAPIFunction), [CategoryGPU](CategoryGPU)
-

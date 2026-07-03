@@ -130,6 +130,7 @@ to look at the Functions section [in a specific category](APIByCategory) instead
 - [SDL_CreateEnvironment](SDL_CreateEnvironment)
 - [SDL_CreateGPUBuffer](SDL_CreateGPUBuffer)
 - [SDL_CreateGPUComputePipeline](SDL_CreateGPUComputePipeline)
+- [SDL_CreateGPUComputePipelineWithResourceLayout](SDL_CreateGPUComputePipelineWithResourceLayout)
 - [SDL_CreateGPUDevice](SDL_CreateGPUDevice)
 - [SDL_CreateGPUDeviceWithProperties](SDL_CreateGPUDeviceWithProperties)
 - [SDL_CreateGPUGraphicsPipeline](SDL_CreateGPUGraphicsPipeline)
@@ -137,6 +138,7 @@ to look at the Functions section [in a specific category](APIByCategory) instead
 - [SDL_CreateGPURenderState](SDL_CreateGPURenderState)
 - [SDL_CreateGPUSampler](SDL_CreateGPUSampler)
 - [SDL_CreateGPUShader](SDL_CreateGPUShader)
+- [SDL_CreateGPUShaderWithResourceLayout](SDL_CreateGPUShaderWithResourceLayout)
 - [SDL_CreateGPUTexture](SDL_CreateGPUTexture)
 - [SDL_CreateGPUTransferBuffer](SDL_CreateGPUTransferBuffer)
 - [SDL_CreateGPUXRSession](SDL_CreateGPUXRSession)
@@ -1331,4 +1333,3 @@ to look at the Functions section [in a specific category](APIByCategory) instead
 - [SDL_WriteU64LE](SDL_WriteU64LE)
 - [SDL_WriteU8](SDL_WriteU8)
 <!-- END CATEGORY LIST -->
-

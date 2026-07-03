@@ -4,7 +4,7 @@ Creates a GPU context.
 
 ## Header File
 
-Defined in [<SDL3/SDL_gpu.h>](https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_gpu.h)
+Defined in [<SDL3/SDL_gpu.h>](https://github.com/FriedaUCG/SDL/blob/webgpu/include/SDL3/SDL_gpu.h)
 
 ## Syntax
 
@@ -35,6 +35,7 @@ The GPU driver name can be one of the following:
 - "vulkan": [Vulkan](CategoryGPU#vulkan)
 - "direct3d12": [D3D12](CategoryGPU#d3d12)
 - "metal": [Metal](CategoryGPU#metal)
+- "webgpu": [WebGPU](CategoryGPU#webgpu)
 - NULL: let SDL pick the optimal driver
 
 ## Version
@@ -51,4 +52,3 @@ This function is available since SDL 3.2.0.
 
 ----
 [CategoryAPI](CategoryAPI), [CategoryAPIFunction](CategoryAPIFunction), [CategoryGPU](CategoryGPU)
-

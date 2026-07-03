@@ -4,7 +4,7 @@ Performs a texture-to-texture copy.
 
 ## Header File
 
-Defined in [<SDL3/SDL_gpu.h>](https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_gpu.h)
+Defined in [<SDL3/SDL_gpu.h>](https://github.com/FriedaUCG/SDL/blob/webgpu/include/SDL3/SDL_gpu.h)
 
 ## Syntax
 
@@ -40,10 +40,14 @@ This function does not support copying between depth and color textures.
 For those, copy the texture to a buffer and then to the destination
 texture.
 
+For compressed texture formats, `source->x`, `source->y`, `destination->x`,
+and `destination->y` must be aligned to the format block width and height.
+`w` and `h` must be multiples of the block width and height unless the
+region reaches the edge of the selected source and destination mip levels.
+
 ## Version
 
 This function is available since SDL 3.2.0.
 
 ----
 [CategoryAPI](CategoryAPI), [CategoryAPIFunction](CategoryAPIFunction), [CategoryGPU](CategoryGPU)
-

@@ -4,7 +4,7 @@ A structure specifying the parameters of the graphics pipeline rasterizer state.
 
 ## Header File
 
-Defined in [<SDL3/SDL_gpu.h>](https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_gpu.h)
+Defined in [<SDL3/SDL_gpu.h>](https://github.com/FriedaUCG/SDL/blob/webgpu/include/SDL3/SDL_gpu.h)
 
 ## Syntax
 
@@ -28,7 +28,9 @@ typedef struct SDL_GPURasterizerState
 
 Note that [SDL_GPU_FILLMODE_LINE](SDL_GPU_FILLMODE_LINE) is not supported
 on many Android devices. For those devices, the fill mode will
-automatically fall back to FILL.
+automatically fall back to FILL. The WebGPU backend rejects
+[SDL_GPU_FILLMODE_LINE](SDL_GPU_FILLMODE_LINE) because WebGPU does not
+expose polygon line fill mode.
 
 Also note that the D3D12 driver will enable depth clamping even if
 enable_depth_clip is true. If you need this clamp+clip behavior, consider
@@ -45,4 +47,3 @@ This struct is available since SDL 3.2.0.
 
 ----
 [CategoryAPI](CategoryAPI), [CategoryAPIStruct](CategoryAPIStruct), [CategoryGPU](CategoryGPU)
-

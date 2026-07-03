@@ -104,13 +104,13 @@ For advanced users, this opens up powerful GPU-driven workflows.
 
 Graphics and compute pipelines require the use of shaders, which as
 mentioned above are small programs executed on the GPU. Each backend
-(Vulkan, Metal, D3D12) requires a different shader format. When the app
-creates the GPU device, the app lets the device know which shader formats
-the app can provide. It will then select the appropriate backend depending
-on the available shader formats and the backends available on the platform.
-When creating shaders, the app must provide the correct shader format for
-the selected backend. If you would like to learn more about why the API
-works this way, there is a detailed
+(Vulkan, Metal, D3D12, WebGPU) requires a different shader format. When the
+app creates the GPU device, the app lets the device know which shader
+formats the app can provide. It will then select the appropriate backend
+depending on the available shader formats and the backends available on the
+platform. When creating shaders, the app must provide the correct shader
+format for the selected backend. If you would like to learn more about why
+the API works this way, there is a detailed
 [blog post](https://moonside.games/posts/layers-all-the-way-down/)
 explaining this situation.
 
@@ -255,6 +255,16 @@ operating system:
   GPU
 - iOS/tvOS requires an A9 GPU or newer
 - iOS Simulator and tvOS Simulator are unsupported
+
+### WebGPU
+
+SDL driver name: "webgpu"
+
+Supported when SDL is built for Emscripten with the Emscripten video driver
+and GPU support enabled. SDL must be built as a static library for this
+backend. Requires browser and hardware WebGPU support. This backend accepts
+WGSL shaders through
+[SDL_GPU_SHADERFORMAT_WGSL](SDL_GPU_SHADERFORMAT_WGSL).
 
 ## Coordinate System
 
@@ -411,11 +421,13 @@ you fix the majority of such problems.
 - [SDL_CopyGPUTextureToTexture](SDL_CopyGPUTextureToTexture)
 - [SDL_CreateGPUBuffer](SDL_CreateGPUBuffer)
 - [SDL_CreateGPUComputePipeline](SDL_CreateGPUComputePipeline)
+- [SDL_CreateGPUComputePipelineWithResourceLayout](SDL_CreateGPUComputePipelineWithResourceLayout)
 - [SDL_CreateGPUDevice](SDL_CreateGPUDevice)
 - [SDL_CreateGPUDeviceWithProperties](SDL_CreateGPUDeviceWithProperties)
 - [SDL_CreateGPUGraphicsPipeline](SDL_CreateGPUGraphicsPipeline)
 - [SDL_CreateGPUSampler](SDL_CreateGPUSampler)
 - [SDL_CreateGPUShader](SDL_CreateGPUShader)
+- [SDL_CreateGPUShaderWithResourceLayout](SDL_CreateGPUShaderWithResourceLayout)
 - [SDL_CreateGPUTexture](SDL_CreateGPUTexture)
 - [SDL_CreateGPUTransferBuffer](SDL_CreateGPUTransferBuffer)
 - [SDL_DestroyGPUDevice](SDL_DestroyGPUDevice)
@@ -521,6 +533,8 @@ you fix the majority of such problems.
 - [SDL_GPUColorTargetDescription](SDL_GPUColorTargetDescription)
 - [SDL_GPUColorTargetInfo](SDL_GPUColorTargetInfo)
 - [SDL_GPUComputePipelineCreateInfo](SDL_GPUComputePipelineCreateInfo)
+- [SDL_GPUComputePipelineResourceLayout](SDL_GPUComputePipelineResourceLayout)
+- [SDL_GPUComputePipelineWithResourceLayoutCreateInfo](SDL_GPUComputePipelineWithResourceLayoutCreateInfo)
 - [SDL_GPUDepthStencilState](SDL_GPUDepthStencilState)
 - [SDL_GPUDepthStencilTargetInfo](SDL_GPUDepthStencilTargetInfo)
 - [SDL_GPUGraphicsPipelineCreateInfo](SDL_GPUGraphicsPipelineCreateInfo)
@@ -530,11 +544,15 @@ you fix the majority of such problems.
 - [SDL_GPUIndirectDrawCommand](SDL_GPUIndirectDrawCommand)
 - [SDL_GPUMultisampleState](SDL_GPUMultisampleState)
 - [SDL_GPURasterizerState](SDL_GPURasterizerState)
+- [SDL_GPUSampledTextureSlotDescription](SDL_GPUSampledTextureSlotDescription)
 - [SDL_GPUSamplerCreateInfo](SDL_GPUSamplerCreateInfo)
 - [SDL_GPUShaderCreateInfo](SDL_GPUShaderCreateInfo)
+- [SDL_GPUShaderResourceLayout](SDL_GPUShaderResourceLayout)
+- [SDL_GPUShaderWithResourceLayoutCreateInfo](SDL_GPUShaderWithResourceLayoutCreateInfo)
 - [SDL_GPUStencilOpState](SDL_GPUStencilOpState)
 - [SDL_GPUStorageBufferReadWriteBinding](SDL_GPUStorageBufferReadWriteBinding)
 - [SDL_GPUStorageTextureReadWriteBinding](SDL_GPUStorageTextureReadWriteBinding)
+- [SDL_GPUStorageTextureSlotDescription](SDL_GPUStorageTextureSlotDescription)
 - [SDL_GPUTextureCreateInfo](SDL_GPUTextureCreateInfo)
 - [SDL_GPUTextureLocation](SDL_GPUTextureLocation)
 - [SDL_GPUTextureRegion](SDL_GPUTextureRegion)
@@ -568,8 +586,11 @@ you fix the majority of such problems.
 - [SDL_GPUSampleCount](SDL_GPUSampleCount)
 - [SDL_GPUSamplerAddressMode](SDL_GPUSamplerAddressMode)
 - [SDL_GPUSamplerMipmapMode](SDL_GPUSamplerMipmapMode)
+- [SDL_GPUShaderSamplerType](SDL_GPUShaderSamplerType)
 - [SDL_GPUShaderStage](SDL_GPUShaderStage)
+- [SDL_GPUShaderTextureSampleType](SDL_GPUShaderTextureSampleType)
 - [SDL_GPUStencilOp](SDL_GPUStencilOp)
+- [SDL_GPUStorageTextureAccess](SDL_GPUStorageTextureAccess)
 - [SDL_GPUStoreOp](SDL_GPUStoreOp)
 - [SDL_GPUSwapchainComposition](SDL_GPUSwapchainComposition)
 - [SDL_GPUTextureFormat](SDL_GPUTextureFormat)
@@ -588,4 +609,3 @@ you fix the majority of such problems.
 
 ----
 [CategoryAPICategory](CategoryAPICategory)
-

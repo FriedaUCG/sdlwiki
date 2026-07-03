@@ -4,7 +4,7 @@ Creates a texture object to be used in graphics or compute workflows.
 
 ## Header File
 
-Defined in [<SDL3/SDL_gpu.h>](https://github.com/libsdl-org/SDL/blob/main/include/SDL3/SDL_gpu.h)
+Defined in [<SDL3/SDL_gpu.h>](https://github.com/FriedaUCG/SDL/blob/webgpu/include/SDL3/SDL_gpu.h)
 
 ## Syntax
 
@@ -36,9 +36,10 @@ performing a render or compute pass with this texture as a target.
 Note that certain combinations of usage flags are invalid. For example, a
 texture cannot have both the SAMPLER and GRAPHICS_STORAGE_READ flags.
 
-If you request a sample count higher than the hardware supports, the
-implementation will automatically fall back to the highest available sample
-count.
+If you need a multisample count, use
+[SDL_GPUTextureSupportsSampleCount](SDL_GPUTextureSupportsSampleCount)() to
+check whether the texture format supports it. Unsupported sample counts can
+make texture creation fail.
 
 There are optional properties that can be provided through
 [SDL_GPUTextureCreateInfo](SDL_GPUTextureCreateInfo)'s `props`. These are
@@ -92,4 +93,3 @@ This function is available since SDL 3.2.0.
 
 ----
 [CategoryAPI](CategoryAPI), [CategoryAPIFunction](CategoryAPIFunction), [CategoryGPU](CategoryGPU)
-
